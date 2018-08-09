@@ -1,0 +1,161 @@
+Deploying angular application using GIT, Jenkins and Docker
+---------------------
+
+What is Angular?
+- It's a framework which is used to develop SPA(single page applications)
+- Content will change based on user interaction
+
+- Docker containers are alternative to VM's which are very lightweight
+they contain the all the dependencies which are required for application but without the actual OS
+
+
+angular application dependencies:
+--------------------------
+node.js - backend for your angular application
+node package manager(npm) - install angular application and maintain all it's dependencies
+package.json(meta data) - what dependencies we need it and version details etc present in this file
+
+
+Sample Docker File
+------------------
+FROM node:6
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+COPY package.json /usr/src/app
+RUN npm cache clean
+RUN npm install
+COPY . /usr/src/ap
+EXPOSE 4200
+CMD ["npm","start"]
+
+
+DOCKER FILE
+---------------------------
+Basic Docker Commands:
+--------------------
+RUN
+FROM
+MAINTAINER
+ADD
+CMD
+ENTRYPOINT
+ENV
+EXPOSE
+USER
+VOLUME
+WORKDIR
+
+- Docker file syntax consist of comments and commands+arguments
+
+FROM command: 
+-------------
+to get/pull an image
+#usage: FROM [image name]
+FROM ubuntu
+
+RUN command:
+-----------
+to build the image and to run any linux commands
+#usage: RUN [command]
+RUN apt-get install -y jenkins
+
+CMD command:
+------------
+#Usage1 : CMD application "argument","argument",...
+CMD "echo" "Welcome to edureka!"
+
+ENTRYPOINT command:
+--------------
+ENTRYPOINT echo
+#Usage example with CMD
+
+#Arguments set with CMD can be overridden during *run* CMD "Hello docker!"
+CMD "Welcome to edureka!"
+ENTRYPOINT echo
+
+ADD command:
+--------------
+It's used to copy the files from source loaction to destination
+
+#Usage: ADD [source directory or URL] [destination directory]
+ADD /my_app_folder /my_app_folder
+
+ENV command:
+-------------
+to set environment variables in docker file
+these variables consist of "key value" pair
+
+#Usage: ENV key value
+ENV SERVER_WORKS 4
+
+WORKDIR command:
+----------------
+working directory is defined where the CMD commands has to be run
+
+#Usage: 
+
+WORKDIR /path
+
+
+EXPOSE command:
+----------------
+expose command is used to set the port number, it's very important command in case of front end applications
+
+#Usage: EXPOSE [port]
+EXPOSE 8080
+
+MAINTAINER command:
+-------------------
+This is non-executing command which is used to declare the authour name
+this command has to be present after the FROM command
+
+#Usage: MAINTAINER [username]
+
+MAINTAINER auth_name
+
+USER command:
+-------------
+To set the user with whom do you want built the conatiner from the image
+
+#Usage: USER [UID]
+USER 751
+
+VOLUME command:
+---------------
+The VOLUME command is used to enable the access from your container to a directory on the host machine(i.e mounting it)
+
+#Usage: VOLUME ["/dir_1", "/dir_2"]
+VOLUME["/myfiles"]
+
+
+Docker file for insatlling Apache2:
+------------------------------------
+FROM ubuntu:12.04
+
+MAINTAINER leela
+
+RUN apt-get update && apt-get install -y apache2 && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+ENV APACHE_RUN_USER www-data
+ENV APACHE_RUN_GROUP www-data
+ENV APACHE_LOG_DIR /var/log/apache2
+
+EXPOSE 80
+
+CMD["/usr/sbin/apache2", "-D", "FOREGROUND"]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
