@@ -1,0 +1,80 @@
+Bash Shell
+------------
+chsh -> to change the shell
+.bashrc -> here you can add PATH variables permanently 
+
+Example1:
+-----------
+#!/bin/bash
+
+username=$1
+groupname=$2
+
+useradd -m $username
+groupadd $groupname
+adduser $username $groupname
+
+
+Example2:
+------------
+#!/bin/bash
+
+/usr/sbin/pgrep rsyslogd > /dev/null
+
+if [ $? -eq 0 ]
+then 
+  echo "the process is running"
+else
+  echo "the process is not running"
+  services rsyslogd restart
+fi
+
+Example3:
+----------
+#!/bin/bash
+count=10
+
+while [ $count -lt 20 ]
+do
+  count=`expr $count + 1`
+  echo "The value of count is: $count"
+done
+
+for i in `ls`
+do
+ mv $i $i.old
+done
+
+
+Regular Expressions:
+--------------------------
+grep -> grep -l "test" *
+
+awk
+  -> awk '{print $1 $2}' filename
+  -> awk '{BEGIN(sum=0) (sum=sum + $5) END(print sum)}' filename
+  -> awk '{if($3 == "leela") print $9}' filename
+  -> awk '{print $NF}' filename
+  -> awk '{print $NR}' filename
+  -> awk 'END{print $NR}' filename
+  -> awk -F: '{print $2}' filename
+  -> awk 'BEGIN{FS=":" ; OFS="-"} {print $4 $5}'
+  -> awk 'BEGIN{FS="\n" ; RS="\nn"} {print $1,$2,$3}'
+  ->awk 'BEGIN{FS="\n" ; RS="\n\n" ; OFS="\t"} {print $1,$2,$3}'
+  
+sed
+  -> sed 's/unix/linux/p' file.txt
+  -> sed -n 's/unix/linux/p' file.txt
+  -> sed 's/unix/linux' file.txt
+  -> sed '2 d' file.txt
+  -> sed '10,$ d' file.tx
+  >grep -v 'unix' file.txt
+  >sed -n '/unix/ !p' file.txt
+  -> sed 's/unix/GREAT &/g' file.txt
+  
+  
+
+
+
+
+

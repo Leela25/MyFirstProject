@@ -1,0 +1,27 @@
+CloudWatch
+------------
+- CloudWatch is used for Infra monitoring, we can monitor all the services using this CloudWatch
+
+Alarms
+------
+- For any service, we can monitor CPU, Space, Memory etc
+- Select Metric as EC2, S3, RDS, AutoScale etc and provide the instance ID which you want to monitor
+- Define your alarm
+- In Alarm we have 3 categories
+  ALARM
+  OK
+  INSUFFICIENT
+
+Events:
+------
+- Events is used for, suppose EC2 machine status change(or any service status change) you can get notified through CloudWatch
+- When status chaning from Running to Stop, yon can configure to take a AMI backup
+- For all services, when status is getting changed from one to another, you can do specific set of operations
+
+Billing
+-------
+- You can monitor your AWS service changes in Billing option
+
+  
+
+ 

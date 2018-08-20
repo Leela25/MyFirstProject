@@ -1,0 +1,15 @@
+SES(Simple Email Services)
+--------------------------
+
+
+
+
+Init scripts are actually imperative shell scripts executed by an interpreter. 
+Here, “imperative” means they contain the commands the system runs to manage the service.
+
+
+Nexus - 3+
+Ansible - 2.2
+Docker CE and EE - 17.02
+maven - 3.3.7
+Jenkins - 1.7

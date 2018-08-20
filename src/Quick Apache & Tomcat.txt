@@ -1,0 +1,57 @@
+Apache and Tomcat:
+-------------------
+Apache Takes The request from user, And handover to Tomcat. And Tomcat handover the request to suitable programs.
+
+
+Apache
+-------
+- By defauly Apache listens on 80
+- To install apache on ubuntu -> apt-get install apache2
+- To restart the apache on ubuntu -> service apache2 restart
+- default path of apache2 is -> /ect/apache2/
+- under "sites-enabled" u can find the default configuration file here. we can create new configuration file also, but the file must end with *.conf
+in default configuration file, we can see the directory root(/var/www/html)
+- by default the index.html will be available under directory root
+- all configuration files ends with *.conf and modules end with *mod
+- if you want to enable any modules in apache which are not comes under default active modules list then,
+a2enmod "modulename"
+- Suppose to enable proxy module
+a2enmod proxy
+
+- After modifying any configurations in apache, in order to reflect the changes, make sure to restart the Apache
+- Apache servers the static pages
+- in configuration file, there will be virtual host block, where u need to enable/add server URL(typically DNS name)
+
+
+setup wordpress in apache
+--------------------------
+- wordpress is a PHP based framework
+- many online news channels are using this wordpress frame work
+- FB also PHP based framework
+- To setup wordpress, you need to setup DB also(in order to save the content in DB)
+- install PHP and my-sql
+- While installing the my-sql, by default the user will be root, u need to setup the password
+- login to the db,
+  mysql -u root -p
+  show databases;
+  create database wpdb;
+  to go inside of the wpdb -> use wpdb;
+  grant all privileges on wpdb.* to wpuser@'localhost' identified by 'DEVOPS12345';
+- Download WP from their offical website and place the files in directoryroot
+- In wordpress, u can find confguration file where you need to provide the DB, username and PASSWORD
+- Restart the Apache
+
+
+
+Tomcat
+------
+- By Default tomcat listens on 8080
+- To run tomcat,  java need to be install on the server
+- Instead of insatllaing java from apt/yum repositories, it's better to download the java from offical website
+- we have java 1.9, however there are some compatibility issues with tomcat and java1.9, so go for java 1.8
+- install tomcat and java
+- we need to set java and tomcat path, add bin folders of java and tomcat to PATH variable
+export PATH=$PATH:/usr/local/jdk1.8/bin/:/usr/local/jdk1.8/jre/bin/:/usr/local/apache_tomcat/bin/
+- Add this path variable to .bashrc file, which load the path whenever you login to the server
+
+ 

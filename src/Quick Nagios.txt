@@ -1,0 +1,72 @@
+Nagios:
+   - Open source infra monitoring tool
+   - Hosts and Services
+   - HostGroups and Service Groups
+   - Contact or Contact Groups
+   - Command Definition
+   - Status codes 0,1,2 represents Success, Warning, Critical
+
+
+Install:
+   - apt-get install nagios3
+   - /etc/nagios3/conf.d
+   - /etc/nagios-plugins/config
+   - /var/log/nagios3/
+   - /usr/lib/nagios3/plugin
+
+Important Points about Command Definition:
+   - Nagios comes with in build Scripts/plugins
+   - We can build custom scripts/plugins also according to our requirement
+   - Once you add/update anything on Nagios configurations, to reflect that changes we need to restart the nagios
+   - service nagios3 restart
+Example - check_process.sh
+#!/bin/bash
+
+pgrep $1 > /dev/null
+
+if [ $? -eq 0 ]
+then
+  echo "$1 is Running, Everything looks good"
+  exit 0
+else
+  echo "$1 is not Running, It's is in CRITICAL State"
+  exit 2
+fi
+
+
+How to monitor Remote Machines:
+    - We can monitor remote machines by connecting through ssh
+    - ssh connection and command execution happens with "nagios" user
+    - make sure nagios user having command "bash"
+    - To check above point you need to go to "/etc/passwd"  file
+    - "usermod -s /bin/bash nagios"
+    - Generate ssh key pair
+    - Add public key in remote server "authorized_keys" file
+    - Now you can able to connect remote machine without password
+    - ssh -i $privatekey ubuntu@$HOSTIP
+    
+Sample script to check a process on Remote machine:
+
+#!bin/bash
+
+PROCESS=$1
+HOSTADDRESS=$2
+
+ssh -i ubuntu@$HOSTADDRESS "pgrep $PROCESS"  > /dev/bash
+if [ $? -eq 0 ]
+then
+  echo "$PROCESS is Running, Everything looks good"
+  exit 0
+else
+  echo "$PROCESS is not Running, It's is in CRITICAL State"
+  exit 2
+fi
+
+
+To connect Nagios GUI:
+    - DNS, open port 80
+    - URL is DNS/nagios3
+    - Username : nagiosadmin
+    - Password : password which u set during the nagios installation
+    
+    

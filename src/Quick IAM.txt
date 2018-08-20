@@ -1,0 +1,26 @@
+IAM(AWS Identity and Access Management)
+----------------------------
+Users and Groups
+-----------------
+- It's simillar to UNIX users and groups concept
+- While creating a user you have to sepcify the user need programatic access or AWS console access
+- You can set up the password and add the user to existing group(if required)
+
+Policies
+----------
+- There are some list of customized policies(while creating a user, u can attach required policies)
+- Policies are documents that are stored using JSON
+            "Action": "ec2:*",
+            "Effect": "Allow",
+            "Resource": "*"
+- Suppose for some user, u selcted EC2ReadOnly policy, then that user can only view the EC2 he don't have right to create a new EC2
+- You can create user defined Policies also
+
+Roles
+------
+- You can use roles to delegate access to users, applications, or services that don't normally have access to your AWS resources
+- Roles are required when one of your service want to call other service through API
+
+
+- in IAM we have two types of access, one is AWS console access and other option is AWs programatic access.
+you have to choose which one you want it.

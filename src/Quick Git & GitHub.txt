@@ -1,0 +1,79 @@
+Git:
+   - It's a open source, cloud based Source Code Repository
+   - Organizations prefer to set up repository in their premise
+   - To install or setup git repository in any linux machine, first we need to install git-core
+   - create a projtect nam elike "project.git" and run git init
+   - Create a user with name "git" (useradd -m git)>
+   - set password for git (passwd git)
+   - From two different machines, create two more users(tom, jerry)
+   - Add ssh keys of tom and jerry to git repository machine
+   - we have to introduce ourself to git, before making any add/update/push/pull/commit
+
+Working Copy, Local Repository, Remote Repository:
+   - In git, every developer has his own local repository
+   - Without having any internet connection, he can do any operations with local repository
+   - To push it to the remote repository developer has to connect to internet
+Commands:
+  - git config --global user.name "git"
+  - git config --global user.email "git@example.com"
+  - git config --global editor vim
+  - To list all git configurations, "git config --list"
+
+From Tom and Jerry's machines:
+  - First setup origin for ur code
+    git remote add origin git@ipaddres:projtect.git
+  - First add files to ur local repository and commit it
+    git add filenames (and) git commit -m "put proper comment, so that other can understand"
+  - Now push your code to remote repository
+    git push origin master
+  - If the code exist on Remote repository, first the developer has to clone the code
+    git clone git@ipaddres:projtect.git
+  
+Commands:
+ - To see all commits
+  git log
+  git show commitid
+ - To go back to previous commit
+  git reset --hard
+  git reset --hard commitid
+
+- To remove existing remote origin
+  git remote rm origin
+  
+Branch Concepts:
+  - To check list of branches
+    git branch
+  - To create new branch
+    git branch Leela_Branch
+    push ur branch to remote repository: git push branch Leela_Branch
+  - mv and rm commands used for moving and removing files
+  - To change one branch to another branch: git checkout Leela_Branch
+  
+Merging Concept:
+  - To merge Leela_Branch changes to master (first u have to be on master)
+    git merge Leela_Branch (if there are any merge conflicts it will show)
+  - While merging u need to add comments
+    
+Tags:
+  - For each release, there will be one tag created
+  - It's always good to create tags based on release or based on module changes(for future reference)
+  - Tag commands,
+    git add tag Tagname, ex: git add tag Rlease1.0
+    git tag list
+    git push origin tag_name
+    
+
+Git Stash:
+
+  - git stash : To save messy working copy in some location for future purpose
+  - git stash apply : If you want to take the stash changes to your working copy
+  - git stash list : It displays the multiple stashes
+  - git stash save "message" : When u have multiple stashes, it's good to save with messages
+  - git stash apply stash@{1} : it deletes the first stash
+  - git stash drop stash@{1} : To drop the first stash
+  - 
+    
+-------------------------------------------------------------
+GitHub:
+  
+  

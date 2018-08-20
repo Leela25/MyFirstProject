@@ -1,0 +1,20 @@
+EC2(Elastic Cloud Computing)
+----------------------------
+Instances:
+----------
+- Instances  : On Demand(By Default AWS chooses instances type)
+- Launch Templates : Here you can keep a template of all the configurations like instance type, volume, SG, VPC, Subnet etc..
+- Spot Requests  : It's good for Testing/DEV activities, not for PROD. 
+- Reserved Instances : You can reserve instance today itself for future purpose, the price is less if u reserve it advanced
+- Dedicated Hosts : Complete host you can take it up, but the cost will be more
+
+AMIs
+----
+- Suppose you installed multiple softwares and setup everything on one machine to run ur application, u can take image of this machine for Autoscaling purpose or duplicate the machines
+
+EBS
+----
+Volumes - For each EC2 machine, the volumes are stored here, u can take backup of existing volume and attach to the another machine
+also you can add extra volume to same machine also, it's almost simillar to connecting pendrive to your machine.
+create new FS for this volume
+Snapshots - 

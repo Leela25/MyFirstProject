@@ -1,0 +1,25 @@
+S3(Simple Storage Service)
+--------------------------
+- To store some files, images etc.. we can use S3 in AWS
+- in S3, we have buckets, we can create each bucket in different regions
+- To access the bucket which u created by you, u need to grant the access to others(users/groups)
+- To make your bucket to access by everyone, put the permissions as "Public"
+- By default AWS, you can create 100 buckets max
+
+- Bucket name should be unique across global(like DNS name)
+
+
+s3cmd
+-----
+- From Unix box also you can operate S3 bucket
+- Install s3cmd
+- while installting it ask for authetication and Security keys
+- s3cmd --help
+- s3cmd mb s3://{bucketname}
+- s3cmd put filename s3://{bucketname}
+- s3cmd ls s3://{bucketname}
+
+
+ 
+
+

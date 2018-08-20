@@ -1,0 +1,26 @@
+CloudFront
+----------
+- Cloudfront is for accessing you web application with less latency
+- Basically benefit of cloudfront is to cache your web content
+- Across the globe there are multiple cloud machines which are sitting at edge of the internet
+- Create a cloudfront and map your web origin(DNS of EC2 or LB)
+- CloudFront gives you some Domain name, add this domain name in Route 53 as CNAME
+- So now, every regular intervals the content from your origin get cached in CloudFront machines
+
+- When some user try to access your website from any corner in the world, first the request will hit near by aws cloudfront machine. It return the content which already loaded in it's cache
+  main benefit of cloudfront is to reduce the latency
+  
+  
+
+RDS(Relation Database Service)
+-------------------------------
+- Amazon highly recommend you to use Amazon Arora DB(incase of production), b'coz it's high availability, throughput, replication across multiple availability zones etc.. 
+- There are some list of mainly used DBs are available in AWS
+   Amazon Arora
+   MySql
+   MariaDB
+   Oracle etc..
+- If you go for MySQL(for production), AWS recommened you to choose Multpile AZ Deployment and Provisioned IOPS Storage
+
+What is Multiple AZ Deployment: It creates stand by DB(Replication of ur main DB) in different region
+

@@ -1,0 +1,27 @@
+VPC(Virtual Private Cloud)
+---------------------------
+- Choose specific range of Private IP addresses for VPC
+- you can create any number of subnets within ur VPC(but the subnet IP range shouldn't be beyond VPC range)
+
+RT(Route Table)
+---------------
+- Create a RT and attach it to Subnet
+- if you want to make subnet as public then specify the destination IP range as all(0.0.0.0/0) and attach ingetnet gateway, 
+so if u attach this RT to any subnet, it can act as public subnet
+- if you created private subnet, attach NAT gateway to the subnet
+- make sure you have to create NAT gateway in public subnet
+
+Internet Gateway and NAT Gateway
+--------------------------------
+- Internet Gateway for Public subnet
+- NAT(Network Address Transition) for Private subnet
+- For NAT gateway, you have to attach Elastic IP
+
+Private IP
+----------
+10.0.0.0 to 10.255.255.255
+172.16.0.0 to 172.31.255.255
+192.168.0.0 to 192.168.255.255
+
+
+Address Range - 10.0.1.0/8 (10.0.1.0 - 10.0.1.255)
