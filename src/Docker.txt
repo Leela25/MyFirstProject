@@ -1,0 +1,64 @@
+[defaults]
+host_key_checking = False
+
+install docker:
+   - To run Docker engine, we need only Linux OS
+   - First install supportive linux kernel
+   - Add apt-get repository to 
+   - Install docker
+   - Docker --version
+   - To pull image from docker is "docker image "hello-world"
+Create Container:
+   - docker run -ti ubuntu /bin/bash
+   - docker ps (or) docker ps -a
+   - docker stop containername
+   - docker rm container name
+Create Image:
+   - docker images
+   - docker commit containername "userid/newname"
+
+Docker Hub:
+   - docker login
+   - docker push "userid/newname"
+
+to add userid to image : docker tag myubuntuimage leela90/myubuntuimage
+
+To go to the existing container  -  docker exec -ti 5e088969c5e2 bash
+To delete docker image - docker rmi imagename
+
+ifconfig
+
+docker build (or) docker build -t MyubuntuImage : This is to build a image from docker file
+
+
+-------------------
+Sample Docker File:
+
+FROM openjdk:8
+ADD target/docker-spring-boot.jar docker-spring-boot.jar
+EXPOSE 8085
+ENTRYPOINT ["java", "-jar", "docker-sprint-boot.jar"]
+
+- To create docker image : docker build -f Dockerfile -t docker-spring-boot .
+- check the docker images : docker images
+- To run the image : docker run -p 8085:8085 docker-spring-boot
+
+---------------------------
+
+
+docker run -p 8080:8080 
+
+
+docker build -t demoapp1 /home/path
+docker run --rm -p 4200:4200 --name "TopMovies" demoapp1
+
+
+
+
+
+
+  
+  
+  
+ 
+

@@ -1,0 +1,335 @@
+Deploying angular application using GIT, Jenkins and Docker
+---------------------
+
+What is Angular?
+- It's a framework which is used to develop SPA(single page applications)
+- Content will change based on user interaction
+
+- Docker containers are alternative to VM's which are very lightweight
+they contain the all the dependencies which are required for application but without the actual OS
+
+
+angular application dependencies:
+--------------------------
+node.js - backend for your angular application
+node package manager(npm) - install angular application and maintain all it's dependencies
+package.json(meta data) - what dependencies we need it and version details etc present in this file
+
+
+Sample Docker File
+------------------
+FROM node:6
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+COPY package.json /usr/src/app
+RUN npm cache clean
+RUN npm install
+COPY . /usr/src/app
+EXPOSE 4200
+CMD ["npm","start"]
+
+
+DOCKER FILE
+---------------------------
+Basic Docker Commands:
+--------------------
+RUN
+FROM
+MAINTAINER
+ADD
+CMD
+ENTRYPOINT
+ENV
+EXPOSE
+USER
+VOLUME
+WORKDIR
+
+- Docker file syntax consist of comments and commands+arguments
+
+FROM command: 
+-------------
+to get/pull an image
+#usage: FROM [image name]
+FROM ubuntu
+
+RUN command:
+-----------
+to build the image and to run any linux commands
+#usage: RUN [command]
+RUN apt-get install -y jenkins
+
+CMD command:
+------------
+#Usage1 : CMD application "argument","argument",...
+CMD "echo" "Welcome to edureka!"
+
+ENTRYPOINT command:
+--------------
+ENTRYPOINT echo
+#Usage example with CMD
+
+#Arguments set with CMD can be overridden during *run* CMD "Hello docker!"
+CMD "Welcome to edureka!"
+ENTRYPOINT echo
+
+ADD command:
+--------------
+It's used to copy the files from source loaction to destination
+
+#Usage: ADD [source directory or URL] [destination directory]
+ADD /my_app_folder /my_app_folder
+
+ENV command:
+-------------
+to set environment variables in docker file
+these variables consist of "key value" pair
+
+#Usage: ENV key value
+ENV SERVER_WORKS 4
+
+WORKDIR command:
+----------------
+working directory is defined where the CMD commands has to be run
+
+#Usage: 
+
+WORKDIR /path
+
+
+EXPOSE command:
+----------------
+expose command is used to set the port number, it's very important command in case of front end applications
+
+#Usage: EXPOSE [port]
+EXPOSE 8080
+
+MAINTAINER command:
+-------------------
+This is non-executing command which is used to declare the authour name
+this command has to be present after the FROM command
+
+#Usage: MAINTAINER [username]
+
+MAINTAINER auth_name
+
+USER command:
+-------------
+To set the user with whom do you want built the conatiner from the image
+
+#Usage: USER [UID]
+USER 751
+
+VOLUME command:
+---------------
+The VOLUME command is used to enable the access from your container to a directory on the host machine(i.e mounting it)
+
+#Usage: VOLUME ["/dir_1", "/dir_2"]
+VOLUME["/myfiles"]
+
+
+Docker file for insatlling Apache2:
+------------------------------------
+FROM ubuntu:12.04
+
+MAINTAINER leela
+
+RUN apt-get update && apt-get install -y apache2 && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+ENV APACHE_RUN_USER www-data
+ENV APACHE_RUN_GROUP www-data
+ENV APACHE_LOG_DIR /var/log/apache2
+
+EXPOSE 80
+
+CMD["/usr/sbin/apache2", "-D", "FOREGROUND"]
+
+
+
+
+
+-------------------------------------------------------------
+Docker Swarm
+------------
+- It's for container orchestration
+- It has manager and workers
+- If application is hosted on one container, we can access that particular application though other containers also
+because we are exposing the ports for application across all nodes in the docker swarm
+
+- it's also useful for to scale and down the services
+- easy to do the Deployments across multiple containers
+
+Commands on MANAGER:
+--------------------
+Initialize the swarm - docker swarm init --advertise-addr <ip-addr>
+List services - docker service ls
+List task of services - docker service ps <name>
+Create new service - docker service create <name> <image-name>
+Remove Service - docker service rm <name>
+Scale Services - docker service scale <name> =5
+Leave the swarm - docker swarm leave --force
+
+
+Commands on Nodes:
+--------------------
+List the nodes - docker node ls
+List services in nodes - docker node ps
+Remove node - docker node rm <id>
+
+
+A swarm is a group of machines that are running Docker and joined into a cluster 
+
+
+
+Docker Swarm is a tool for Container Orchestration
+
+
+Let’s take an example
+
+You have 100 containers
+
+You need to do 
+- Health check on every container
+- Ensure all containers are up on every system
+- Scaling the containers up or down depending on the load
+- Adding updates/changes to all the containers
+
+Orchestration - managing and controlling multiple docker containers as a single service
+Tools available - Docker Swarm, Kubernetes, Apache Mesos
+
+
+
+Pre-requisites
+1. Docker 1.13 or higher
+2. Docker Machine (pre installed for Docker for Windows and Docker for Mac)https://docs.docker.com/machine/insta...
+https://docs.docker.com/get-started/p...
+
+
+
+
+
+Step 1 :  Create Docker machines (to act as nodes for Docker Swarm)   Create one machine as manager and others as workers
+    docker-machine create --driver hyperv manager1    docker-machine create --driver virtualbox manager1
+
+   docker-machine:Error with pre-create check: “exit status 126”
+   https://stackoverflow.com/questions/3...
+   brew cask install virtualbox;
+
+   Create one manager machine
+   and other worker machines
+
+
+Step 2 :  Check machine created successfully
+    docker-machine ls
+    docker-machine ip manager1
+
+
+Step 3 :  SSH (connect) to docker machine
+    docker-machine ssh manager1
+
+
+Step 4 :  Initialize Docker Swarm    docker swarm init --advertise-addr MANAGER_IP
+    docker node ls
+    (this command will work only in swarm manager and not in worker)
+
+
+Step 5 :  Join workers in the swarm
+    Get command for joining as worker
+    In manager node run command
+    docker swarm join-token worker
+    This will give command to join swarm as worker
+
+    docker swarm join-token manager
+    This will give command to join swarm as manager
+
+    SSH into worker node (machine) and run command to join swarm as worker
+   
+    In Manager Run command - docker node ls to verify worker is registered and is ready
+  
+    Do this for all worker machines
+
+
+Step 6 :  On manager run standard docker commands
+    docker info
+    check the swarm section 
+    no of manager, nodes etc
+
+    Now check docker swarm command options 
+    docker swarm 
+
+
+Step 7 :  Run containers on Docker Swarm
+    docker service create --replicas 3 -p 80:80 --name serviceName nginx
+
+    Check the status:
+    docker service ls
+    docker service ps serviceName
+   
+    Check the service running on all nodes
+    Check on the browser by giving ip for all nodes
+
+
+Step 8 :  Scale service up and down
+   On manager node 
+   docker service scale serviceName=2
+ 
+
+Inspecting Nodes (this command can run only on manager node)
+docker node inspect nodename
+docker node inspect self
+docker node inspect worker1
+
+
+Step 9 : Shutdown node
+   docker node update --availability drain worker1
+
+
+Step 10 :  Update service
+   docker service update --image imagename:version web
+   docker service update --image nginx:1.14.0 serviceName
+
+
+Step 11 :  Remove service
+   docker service rm serviceName
+
+
+docker swarm leave : to leave the swarm
+docker-machine stop machineName : to stop the machine
+docker-machine rm machineName : to remove the machine
+
+
+REFERENCES:
+https://docs.docker.com/get-started/p...
+https://rominirani.com/docker-swarm-t...
+
+
+
+FAQs & Helpful Tips:
+
+A swarm is a group of machines that are running Docker and joined into a cluster
+
+A cluster is managed by swarm manager
+
+The machines in a swarm can be physical or virtual. After joining a swarm, they are referred to as nodes
+
+Swarm managers are the only machines in a swarm that can execute your commands, or authorise other machines to join the swarm as workers
+
+Workers are just there to provide capacity and do not have the authority to tell any other machine what it can and cannot do
+
+you can have a node join as a worker or as a manager. At any point in time, there is only one LEADER and the other manager nodes will be as backup in case the current LEADER opts out
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
